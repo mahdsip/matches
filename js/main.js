@@ -18,20 +18,30 @@
         //             dos imágenes al mismo tiempo.
         locked = false;
 
+        //clicks2 = 6;
 
     config = {
         themesPath: 'img/shapes/',
-        currentTheme: 'superheroes',
+        currentTheme: 'tech',
         themes: {
             superheroes: {
                 dirpath: 'superheroes/',
                 suffix: 'sph',
                 ext: '.jpg'
+            },
+            tech: {
+              dirpath: 'tech/',
+              suffix: 'sph',
+              ext: '.jpg'
             }
         }
     };
 
-
+    var clicks = 0;
+    var frase = 'Lets start!!';
+    var attempts = 0;
+    var pairs = 0;
+    var pairs2 = 0;
     cells = document.querySelectorAll('.grid-cell');
 
     for (var i = 0; i < cells.length; i++) {
@@ -120,7 +130,29 @@
             item1,
             item2;
 
+
+
         if (!locked) {
+            if (couple.length <= 8) {
+              clicks += 1;
+            }
+            var clicks2 = clicks/2;
+            var attempts = clicks/2;
+            var a = attempts-pairs;
+
+            if (clicks > 7) {
+              if ((a < 4)) {frase = 'Roock Star!!'}
+              if ((a < 7) & (a >=4)) {frase = 'Well done'}
+              if ((a < 10) & (a >=7)) {frase = 'Bit clumsy'}
+              if ((a < 12) & (a >=10)) {frase = 'Are you iPhone user?'}
+              if ((a > 12)) {frase = 'You fanboy....'}
+            }
+             if ((clicks%2) == 0){
+               //frase = 'hola';
+               document.getElementById("frase").innerHTML = frase;
+            }
+
+
             self.removeEventListener('click', clickHandler, false);
             img = self.firstElementChild;
             img.style.opacity = 1;
@@ -134,6 +166,9 @@
 
                 if (item1.imgName === item2.imgName) {
                     locked = false;
+                    pairs += 1;
+                    pairs2 = pairs;
+
                 } else {
                     setTimeout(function() {
                         item1.cell.addEventListener('click', clickHandler, false);
@@ -143,6 +178,8 @@
                         locked = false;
                     }, 2000);
                 }
+                document.getElementById("clicks2").innerHTML = clicks2;
+                document.getElementById("pairs").innerHTML = pairs2;
             }
         }
     }
